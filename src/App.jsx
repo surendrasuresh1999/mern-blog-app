@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import LoginPage from "./Pages/LoginPage";
+import SignupPage from "./Pages/SignupPage";
+import CommonPage from "./Pages/CommonPage";
+import PageNotFound from "./Pages/PageNotFound";
+import AuthorsPage from "./Pages/AuthorsPage";
+import QuotesPage from "./Pages/QuotesPage";
+import BlogDetailsPage from "./Pages/BlogDetailsPage";
+import ProtectedRoute from "./Pages/ProtectedRoute";
+import MyActivityPage from "./Pages/MyActivityPage";
+import LandingPage from "./Pages/LandingPage";
+import BlogsPage from "./Pages/BlogsPage";
+import ForgotPassword from "./Pages/ForgotPassword";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React surendra blogs</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Routes>
+      <Route path="login" element={<LoginPage />} />
+      <Route path="signup" element={<SignupPage />} />
+      <Route path="forgot-password" element={<ForgotPassword />} />
+      <Route path="" element={<CommonPage />}>
+        <Route index element={<LandingPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="blogs" element={<BlogsPage />} />
+          <Route path="authors" element={<AuthorsPage />} />
+          <Route path="my-activity" element={<MyActivityPage />} />
+          <Route path="blogs/:id" element={<BlogDetailsPage />} />
+          <Route path="my-activity/:id" element={<BlogDetailsPage />} />
+          <Route path="quotes" element={<QuotesPage />} />
+        </Route>
+      </Route>
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
+  );
+};
 
-export default App
+export default App;
